@@ -25,5 +25,8 @@ BNO055 pushed topics to /imu/magnetometer and /imu/data
 imu_filter_madgwick listens to topics from /imu/mag
 
 
+![image](https://user-images.githubusercontent.com/55643200/191800376-25ddc95d-58de-4c26-b556-72f183c39ff9.png)
+
+
 
 
