@@ -1,8 +1,8 @@
 /*
- * rosserial Servo Control Example
- *
- * This sketch demonstrates the control of hobby R/C servos
- * using ROS and the arduiono
+ * # 2023.11.26 McMaster AutoPlow  
+ * Authors : Zachary Figueria https://www.linkedin.com/in/zachary-farrugia/  Yuxiang Guan https://www.linkedin.com/in/yuxiang-guan/
+ * 
+ * References:
  * 
  * For the full tutorial write up, visit
  * www.ros.org/wiki/rosserial_arduino_demos
@@ -21,8 +21,6 @@
 // create an instance of the stepper class using the steps and pins
 Stepper stepper(STEPS, 8, 10, 9, 11);
 
-int val = 0;
-
 //--------------------------------------------------------
 
 #if (ARDUINO >= 100)
@@ -32,34 +30,27 @@ int val = 0;
 #endif
 
 
-#include <Servo.h> 
 #include <ros.h>
 #include <std_msgs/Float64.h>
 
 ros::NodeHandle  nh;
 
-Servo servo;
 
-
-void servo_cb( const std_msgs::Float64& cmd_msg){
-  //servo.write(cmd_msg.data); //set servo angle, should be from 0-180  
-  //val = Serial.parseInt();
+void stepper_cb( const std_msgs::Float64& cmd_msg){
   stepper.step(cmd_msg.data);
   Serial.println(cmd_msg.data); //for debugging
 }
 
 
-ros::Subscriber<std_msgs::Float64> sub("servo", servo_cb);
+ros::Subscriber<std_msgs::Float64> sub("stepper_velocity", stepper_cb);
 
 void setup(){
-  //pinMode(13, OUTPUT);
   stepper.setSpeed(200);
   nh.initNode();
   nh.subscribe(sub);
-  //servo.attach(9); //attach it to pin 9
 }
 
 void loop(){
   nh.spinOnce();
-  //delay(1);
+  delay(1);
 }
